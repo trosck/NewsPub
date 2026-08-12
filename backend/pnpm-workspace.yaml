@@ -1,0 +1,5 @@
+allowBuilds:
+  bcrypt: true
+  esbuild: true
+minimumReleaseAgeExclude:
+  - mongoose@9.9.2
