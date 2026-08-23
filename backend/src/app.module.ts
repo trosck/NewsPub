@@ -6,9 +6,9 @@ import pino from "pino";
 
 import configuration from "./config/configuration";
 import { AppController } from "./app.controller";
-import { UsersModule } from "./users/users.module";
-import { AuthModule } from "./auth/auth.module";
-import { NewsModule } from "./news/news.module";
+import { UsersModule } from "./modules/users/users.module";
+import { AuthModule } from "./modules/auth/auth.module";
+import { NewsModule } from "./modules/news/news.module";
 import { UploadModule } from "./upload/upload.module";
 import { RealtimeModule } from "./realtime/realtime.module";
 

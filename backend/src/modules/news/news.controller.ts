@@ -14,8 +14,8 @@ import {
 
 import { NewsService } from "./news.service";
 import { CreateNewsDto } from "./dto/create-news.dto";
-import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
-import { CurrentUser } from "../common/decorators/current-user.decorator";
+import { JwtAuthGuard } from "../../common/guards/jwt-auth.guard";
+import { CurrentUser } from "../../common/decorators/current-user.decorator";
 import type { UserDocument } from "../users/schemas/user.schema";
 
 @Controller("api/news")

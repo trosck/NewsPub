@@ -9,8 +9,8 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 
 import { News, NewsDocument } from "./schemas/news.schema";
-import { RealtimeService } from "../realtime/realtime.service";
-import { NewsEventType } from "../realtime/realtime.types";
+import { RealtimeService } from "../../realtime/realtime.service";
+import { NewsEventType } from "../../realtime/realtime.types";
 
 @Injectable()
 export class NewsPublisherService

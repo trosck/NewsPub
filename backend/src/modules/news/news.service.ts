@@ -10,8 +10,8 @@ import mongoose, { Model, Types } from "mongoose";
 
 import { News, NewsDocument } from "./schemas/news.schema";
 import { CreateNewsDto } from "./dto/create-news.dto";
-import { RealtimeService } from "../realtime/realtime.service";
-import { NewsEventType } from "../realtime/realtime.types";
+import { RealtimeService } from "../../realtime/realtime.service";
+import { NewsEventType } from "../../realtime/realtime.types";
 import type { UserDocument } from "../users/schemas/user.schema";
 
 export interface ListResult {

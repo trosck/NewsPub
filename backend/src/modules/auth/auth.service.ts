@@ -5,7 +5,7 @@ import type { Response } from "express";
 
 import { UsersService } from "../users/users.service";
 import type { UserDocument } from "../users/schemas/user.schema";
-import { setAuthCookie, clearAuthCookie } from "../common/utils/auth-cookie";
+import { setAuthCookie, clearAuthCookie } from "../../common/utils/auth-cookie";
 
 @Injectable()
 export class AuthService {

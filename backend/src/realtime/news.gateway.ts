@@ -23,7 +23,7 @@ function readCookie(raw: string, name: string): string | null {
 }
 
 import { RealtimeService } from "./realtime.service";
-import { UsersService } from "../users/users.service";
+import { UsersService } from "../modules/users/users.service";
 import { AUTH_COOKIE_NAME } from "../common/guards/jwt-auth.guard";
 
 const logger = new Logger("NewsGateway");

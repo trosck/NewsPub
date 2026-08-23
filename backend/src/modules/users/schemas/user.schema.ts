@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, Model, Types } from "mongoose";
 import * as bcrypt from "bcrypt";
 
-import { appConfig } from "../../config/constants";
+import { appConfig } from "../../../config/constants";
 
 export interface UserDocument extends Document<Types.ObjectId> {
   name: string;

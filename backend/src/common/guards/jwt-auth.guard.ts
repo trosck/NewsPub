@@ -7,8 +7,8 @@ import {
 import { JwtService } from "@nestjs/jwt";
 import type { Request } from "express";
 
-import { UsersService } from "../../users/users.service";
-import type { UserDocument } from "../../users/schemas/user.schema";
+import { UsersService } from "../../modules/users/users.service";
+import type { UserDocument } from "../../modules/users/schemas/user.schema";
 
 export const AUTH_COOKIE_NAME = "token";
 
