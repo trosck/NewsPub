@@ -1,5 +1,7 @@
 allowBuilds:
   bcrypt: true
   esbuild: true
+  mongodb-memory-server: true
+  unrs-resolver: true
 minimumReleaseAgeExclude:
   - mongoose@9.9.2
