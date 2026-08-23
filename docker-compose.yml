@@ -1,0 +1,27 @@
+services:
+  minio:
+    image: quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
+    container_name: minio
+    ports:
+      - '9000:9000' # API
+      - '9001:9001' # Web Console
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: password
+      MINIO_DEFAULT_BUCKETS: bucket
+      DO_NOT_TRACK: 1
+    volumes:
+      - minio_data:/data
+    command: ['server', '--console-address', ':9001', '/data']
+
+  atlas:
+    image: mongodb/mongodb-atlas-local:8.0.5
+    container_name: atlas
+    ports:
+      - '27017:27017'
+    environment:
+      MONGODB_INITDB_ROOT_USERNAME: admin
+      MONGODB_INITDB_ROOT_PASSWORD: admin
+
+volumes:
+  minio_data:
