@@ -10,7 +10,6 @@ import mongoose, { Model, Types } from "mongoose";
 
 import { News, NewsDocument } from "./schemas/news.schema";
 import { CreateNewsDto } from "./dto/create-news.dto";
-import { UpdateNewsDto } from "./dto/update-news.dto";
 import { RealtimeService } from "../realtime/realtime.service";
 import { NewsEventType } from "../realtime/realtime.types";
 import type { UserDocument } from "../users/schemas/user.schema";
@@ -113,13 +112,16 @@ export class NewsService {
       throw err;
     }
 
-    this.realtime.emitNewsEvent(NewsEventType.Created, { id: String(news._id) });
+    this.realtime.emitNewsEvent(NewsEventType.Created, {
+      id: String(news._id),
+    });
+
     return { news: news.toJSON() };
   }
 
   async update(
     id: string,
-    dto: UpdateNewsDto,
+    dto: CreateNewsDto,
     requester: UserDocument,
   ): Promise<{ news: unknown }> {
     const news = await findNews(this.newsModel, id);
@@ -149,7 +151,10 @@ export class NewsService {
       throw err;
     }
 
-    this.realtime.emitNewsEvent(NewsEventType.Updated, { id: String(news._id) });
+    this.realtime.emitNewsEvent(NewsEventType.Updated, {
+      id: String(news._id),
+    });
+
     return { news: news.toJSON() };
   }
 
@@ -162,6 +167,9 @@ export class NewsService {
     }
 
     await news.deleteOne();
-    this.realtime.emitNewsEvent(NewsEventType.Deleted, { id: String(news._id) });
+
+    this.realtime.emitNewsEvent(NewsEventType.Deleted, {
+      id: String(news._id),
+    });
   }
 }

@@ -14,7 +14,6 @@ import {
 
 import { NewsService } from "./news.service";
 import { CreateNewsDto } from "./dto/create-news.dto";
-import { UpdateNewsDto } from "./dto/update-news.dto";
 import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
 import { CurrentUser } from "../common/decorators/current-user.decorator";
 import type { UserDocument } from "../users/schemas/user.schema";
@@ -47,7 +46,7 @@ export class NewsController {
   @Patch(":id")
   update(
     @Param("id") id: string,
-    @Body() dto: UpdateNewsDto,
+    @Body() dto: CreateNewsDto,
     @CurrentUser() user: UserDocument,
   ) {
     return this.newsService.update(id, dto, user);

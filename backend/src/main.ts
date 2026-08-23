@@ -2,11 +2,12 @@ import "reflect-metadata";
 
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
-import { BadRequestException, Logger, ValidationPipe } from "@nestjs/common";
-import cookieParser from "cookie-parser";
-import helmet from "helmet";
+import { Logger, ValidationPipe } from "@nestjs/common";
+
 import cors from "cors";
+import helmet from "helmet";
 import express from "express";
+import cookieParser from "cookie-parser";
 import { Logger as PinoLogger } from "nestjs-pino";
 
 import { AppModule } from "./app.module";
@@ -29,16 +30,9 @@ async function bootstrap(): Promise<void> {
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
-      exceptionFactory: (errors) => {
-        const first = errors[0];
-        const constraints = first?.constraints;
-        const message = constraints
-          ? (Object.values(constraints)[0] ?? "Bad request")
-          : "Bad request";
-        return new BadRequestException(message);
-      },
     }),
   );
+
   app.useGlobalFilters(
     new AllExceptionsFilter(app.get(PinoLogger, { strict: false })),
   );

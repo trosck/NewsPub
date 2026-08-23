@@ -27,12 +27,12 @@ class AttachmentDto {
 }
 
 export class CreateNewsDto {
-  @IsString({ message: "title and content are required" })
-  @IsNotEmpty({ message: "title and content are required" })
+  @IsString()
+  @IsNotEmpty()
   title: string;
 
-  @IsString({ message: "title and content are required" })
-  @IsNotEmpty({ message: "title and content are required" })
+  @IsString()
+  @IsNotEmpty()
   content: string;
 
   @IsOptional()
