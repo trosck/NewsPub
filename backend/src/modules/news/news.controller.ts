@@ -18,10 +18,16 @@ import { JwtAuthGuard } from "../../common/guards/jwt-auth.guard";
 import { CurrentUser } from "../../common/decorators/current-user.decorator";
 import type { UserDocument } from "../users/schemas/user.schema";
 
-@Controller("api/news")
+@Controller("news")
 @UseGuards(JwtAuthGuard)
 export class NewsController {
   constructor(private readonly newsService: NewsService) {}
+
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  create(@Body() dto: CreateNewsDto, @CurrentUser() user: UserDocument) {
+    return this.newsService.create(dto, user);
+  }
 
   @Get()
   list(
@@ -35,12 +41,6 @@ export class NewsController {
   @Get(":id")
   get(@Param("id") id: string, @CurrentUser() user: UserDocument | undefined) {
     return this.newsService.get(id, user);
-  }
-
-  @Post()
-  @HttpCode(HttpStatus.CREATED)
-  create(@Body() dto: CreateNewsDto, @CurrentUser() user: UserDocument) {
-    return this.newsService.create(dto, user);
   }
 
   @Patch(":id")

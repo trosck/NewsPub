@@ -5,22 +5,25 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  Req,
   Res,
-  UseGuards,
+  UnauthorizedException,
 } from "@nestjs/common";
-import type { Response } from "express";
+
+import type { Response, Request } from "express";
 
 import { AuthService } from "./auth.service";
 import { RegisterDto } from "./dto/register.dto";
 import { LoginDto } from "./dto/login.dto";
-import { JwtAuthGuard } from "../../common/guards/jwt-auth.guard";
-import { CurrentUser } from "../../common/decorators/current-user.decorator";
-import type { UserDocument } from "../users/schemas/user.schema";
 
-@Controller("api/auth")
+import { Public } from "../../common/decorators/public.decorator";
+import type { User, UserDocument } from "../users/schemas/user.schema";
+
+@Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post("register")
   @HttpCode(HttpStatus.CREATED)
   async register(
@@ -30,25 +33,36 @@ export class AuthController {
     return this.authService.register(dto, res);
   }
 
+  @Public()
   @Post("login")
   async login(
     @Body() dto: LoginDto,
     @Res({ passthrough: true }) res: Response,
-  ): Promise<{ user: unknown }> {
-    return this.authService.login(dto, res);
+  ) {
+    const user = await this.authService.validateUser(dto.email, dto.password);
+    const result = await this.authService.login(user, res);
+    return res.json(result);
   }
 
   @Post("logout")
-  logout(@Res({ passthrough: true }) res: Response): { success: boolean } {
+  logout(@Res({ passthrough: true }) res: Response) {
     return this.authService.logout(res);
   }
-}
 
-@Controller("api")
-@UseGuards(JwtAuthGuard)
-export class MeController {
+  @Public()
+  @Post("refresh")
+  @HttpCode(HttpStatus.OK)
+  async refresh(@Req() req: Request, @Res() res: Response) {
+    const refreshToken = req.cookies?.refresh_token;
+    if (!refreshToken) {
+      throw new UnauthorizedException("Refresh token not found");
+    }
+
+    await this.authService.refresh(refreshToken, res);
+  }
+
   @Get("me")
-  me(@CurrentUser() user: UserDocument | undefined): { user: unknown } {
-    return { user: user?.toJSON() };
+  me() {
+    return;
   }
 }

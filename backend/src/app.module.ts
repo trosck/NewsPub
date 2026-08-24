@@ -11,6 +11,8 @@ import { AuthModule } from "./modules/auth/auth.module";
 import { NewsModule } from "./modules/news/news.module";
 import { UploadModule } from "./upload/upload.module";
 import { RealtimeModule } from "./realtime/realtime.module";
+import { APP_GUARD } from "@nestjs/core";
+import { JwtAuthGuard } from "./common/guards/jwt-auth.guard";
 
 @Module({
   imports: [
@@ -18,7 +20,7 @@ import { RealtimeModule } from "./realtime/realtime.module";
     LoggerModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
-        const isProd = config.get<boolean>("isProd", false);
+        const isProd = config.get<boolean>("isProd");
 
         const pinoOptions: pino.LoggerOptions = {
           level: isProd ? "info" : "debug",
@@ -43,5 +45,11 @@ import { RealtimeModule } from "./realtime/realtime.module";
     RealtimeModule,
   ],
   controllers: [AppController],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}
