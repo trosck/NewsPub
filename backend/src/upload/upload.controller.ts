@@ -10,8 +10,8 @@ import { FileInterceptor } from "@nestjs/platform-express";
 
 import { TigrisService } from "./tigris.service";
 import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
-import { CurrentUser } from "../common/decorators/current-user.decorator";
 import type { UserDocument } from "../modules/users/schemas/user.schema";
+import { CurrentUser } from "../common/decorators/current-user.decorator";
 
 export interface UploadResult {
   url: string;

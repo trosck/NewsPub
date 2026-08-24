@@ -17,7 +17,6 @@ import { RegisterDto } from "./dto/register.dto";
 import { LoginDto } from "./dto/login.dto";
 
 import { Public } from "../../common/decorators/public.decorator";
-import type { User, UserDocument } from "../users/schemas/user.schema";
 
 @Controller("auth")
 export class AuthController {
