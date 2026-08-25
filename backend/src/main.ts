@@ -2,13 +2,12 @@ import "reflect-metadata";
 
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
-import { Logger, ValidationPipe } from "@nestjs/common";
+import { ConsoleLogger, Logger, ValidationPipe } from "@nestjs/common";
 
 import cors from "cors";
 import helmet from "helmet";
 import express from "express";
 import cookieParser from "cookie-parser";
-import { Logger as PinoLogger } from "nestjs-pino";
 
 import { AppModule } from "./app.module";
 import { AllExceptionsFilter } from "./common/filters/all-exceptions.filter";
@@ -18,7 +17,8 @@ async function bootstrap(): Promise<void> {
     bodyParser: false,
   });
 
-  app.useLogger(app.get(Logger));
+  const logger = app.get(ConsoleLogger);
+  app.useLogger(logger);
 
   app.use(helmet());
   const clientUrl = process.env.CLIENT_URL ?? "";
@@ -33,9 +33,7 @@ async function bootstrap(): Promise<void> {
     }),
   );
 
-  app.useGlobalFilters(
-    new AllExceptionsFilter(app.get(PinoLogger, { strict: false })),
-  );
+  app.useGlobalFilters(new AllExceptionsFilter(logger));
 
   app.enableShutdownHooks();
 

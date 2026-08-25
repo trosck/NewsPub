@@ -4,17 +4,21 @@ import cookieParser from "cookie-parser";
 
 import "./env";
 import { AppModule } from "../app.module";
-import { TigrisService } from "../upload/tigris.service";
 import { setupMemoryDb, teardownMemoryDb } from "./env";
 import { cookieHeader } from "./setup";
 
 import type { INestApplication } from "@nestjs/common";
+import { TigrisService } from "../modules/upload/tigris.service";
 
 describe("Upload (e2e)", () => {
   let app: INestApplication;
   let cookie: string;
 
-  const user = { name: "Uploader", email: "uploader@example.com", password: "password123" };
+  const user = {
+    name: "Uploader",
+    email: "uploader@example.com",
+    password: "password123",
+  };
 
   beforeAll(async () => {
     await setupMemoryDb();

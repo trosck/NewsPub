@@ -1,5 +1,10 @@
 import { Test } from "@nestjs/testing";
-import { INestApplication, ValidationPipe, BadRequestException } from "@nestjs/common";
+import {
+  INestApplication,
+  ValidationPipe,
+  BadRequestException,
+  ConsoleLogger,
+} from "@nestjs/common";
 import type { Response } from "supertest";
 
 export function setCookies(res: Response): string[] {
@@ -16,7 +21,6 @@ import express from "express";
 
 import { AppModule } from "../app.module";
 import { AllExceptionsFilter } from "../common/filters/all-exceptions.filter";
-import { Logger } from "nestjs-pino";
 
 export async function createTestApp(): Promise<INestApplication> {
   const app = await Test.createTestingModule({
@@ -47,7 +51,7 @@ export async function createTestApp(): Promise<INestApplication> {
     }),
   );
   instance.useGlobalFilters(
-    new AllExceptionsFilter(instance.get(Logger, { strict: false })),
+    new AllExceptionsFilter(instance.get(ConsoleLogger, { strict: false })),
   );
 
   await instance.init();

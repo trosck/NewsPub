@@ -22,7 +22,7 @@ updates over Socket.IO, and S3-compatible file uploads.
 - **File uploads** -- `multipart/form-data` uploads to S3-compatible storage via
   [Tigris](https://www.tigrisdata.com) (`@tigrisdata/storage`) and Multer.
 - **Security & ops** -- Helmet headers, CORS locked to the client URL, structured
-  request logging with per-request IDs (Pino + pino-http), graceful shutdown on
+  request logging with per-request IDs, graceful shutdown on
   `SIGINT` / `SIGTERM`, and a `/api/health` check.
 - **Errors** -- a global exception filter renders every error as
   `{ error: message }` (the shape the frontend expects); non-HTTP errors are
@@ -36,7 +36,6 @@ updates over Socket.IO, and S3-compatible file uploads.
 - **Auth** -- `@nestjs/jwt`, `bcrypt`
 - **Realtime** -- Socket.IO 4 (`@nestjs/websockets`)
 - **Storage** -- `@tigrisdata/storage`, Multer
-- **Logging** -- Pino, pino-http, pino-pretty, `nestjs-pino`
 - **Tooling** -- Nest CLI (dev/build), Jest + supertest + mongodb-memory-server
   (e2e tests), Prettier
 
@@ -93,10 +92,9 @@ src/
    | `BCRYPT_SALT_ROUNDS`      | bcrypt cost factor, default `10`               |
    | `NEWS_PUBLISH_INTERVAL_MS`| Scheduler interval, default `60000`            |
    | `CLIENT_URL`              | Frontend origin, used for CORS and Socket.IO   |
-   | `S3_ACCESS_KEY_ID`        | S3 / Tigris access key                         |
-   | `S3_SECRET_ACCESS_KEY`    | S3 / Tigris secret key                         |
-   | `S3_ENDPOINT`             | S3 / Tigris endpoint URL                       |
-   | `S3_IAM_ENDPOINT`         | Tigris IAM endpoint                            |
+   | `S3_ACCESS_KEY_ID`        | S3 access key                                  |
+   | `S3_SECRET_ACCESS_KEY`    | S3 secret key                                  |
+   | `S3_ENDPOINT`             | S3 endpoint URL                                |
    | `S3_BUCKET`               | Target bucket name                             |
 
 3. Run in development:

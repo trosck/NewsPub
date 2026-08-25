@@ -24,7 +24,6 @@ function readCookie(raw: string, name: string): string | null {
 
 import { RealtimeService } from "./realtime.service";
 import { UsersService } from "../modules/users/users.service";
-import { AUTH_COOKIE_NAME } from "../common/guards/jwt-auth.guard";
 
 const logger = new Logger("NewsGateway");
 
@@ -59,7 +58,7 @@ export class NewsGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     const raw = socket.handshake.headers.cookie;
     if (typeof raw !== "string" || raw.length === 0) return null;
 
-    const token = readCookie(raw, AUTH_COOKIE_NAME);
+    const token = readCookie(raw, "AUTH_COOKIE_NAME");
     if (typeof token !== "string" || token.length === 0) return null;
 
     try {

@@ -11,7 +11,6 @@ export class TigrisService {
       accessKeyId: configService.getOrThrow<string>("s3.accessKeyId"),
       secretAccessKey: configService.getOrThrow<string>("s3.secretAccessKey"),
       endpoint: configService.getOrThrow<string>("s3.endpoint"),
-      iamEndpoint: configService.getOrThrow<string>("s3.iamEndpoint"),
       bucket: configService.getOrThrow<string>("s3.bucket"),
     };
   }

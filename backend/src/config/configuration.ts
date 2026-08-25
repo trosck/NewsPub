@@ -12,7 +12,6 @@ export interface AppConfig {
     accessKeyId: string;
     secretAccessKey: string;
     endpoint: string;
-    iamEndpoint: string;
     bucket: string;
     uploadLimitMb: number;
   };
@@ -52,7 +51,6 @@ export default (): AppConfig => {
       accessKeyId: requireEnv("S3_ACCESS_KEY_ID"),
       secretAccessKey: requireEnv("S3_SECRET_ACCESS_KEY"),
       endpoint: requireEnv("S3_ENDPOINT"),
-      iamEndpoint: requireEnv("S3_IAM_ENDPOINT"),
       bucket: requireEnv("S3_BUCKET"),
       uploadLimitMb: Number(requireEnv("S3_UPLOAD_LIMIT_MB")),
     },

@@ -1,12 +1,16 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from "@nestjs/common";
-import { PinoLogger } from "nestjs-pino";
+import {
+  ArgumentsHost,
+  Catch,
+  ConsoleLogger,
+  ExceptionFilter,
+  HttpException,
+  HttpStatus,
+} from "@nestjs/common";
 import type { Response } from "express";
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  constructor(private readonly logger: PinoLogger) {
-    logger.setContext(AllExceptionsFilter.name);
-  }
+  constructor(private readonly logger: ConsoleLogger) {}
 
   catch(exception: unknown, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
@@ -26,11 +30,14 @@ export class AllExceptionsFilter implements ExceptionFilter {
       typeof body === "string"
         ? body
         : typeof (body as { message?: unknown }).message === "string"
-          ? ((body as { message: string }).message)
+          ? (body as { message: string }).message
           : "Internal Server Error";
 
     if (statusCode >= 500) {
-      this.logger.error({ err: exception, status: statusCode }, "Unhandled error");
+      this.logger.error(
+        { err: exception, status: statusCode },
+        "Unhandled error",
+      );
     }
 
     response.status(statusCode).json({ error: message });
