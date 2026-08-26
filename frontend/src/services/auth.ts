@@ -24,3 +24,9 @@ export async function logout() {
     method: "POST",
   });
 }
+
+export async function refresh() {
+  return request<User>("/auth/refresh", {
+    method: "POST",
+  });
+}

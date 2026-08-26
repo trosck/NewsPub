@@ -13,6 +13,7 @@ import {
   fetchMe,
   login as loginRequest,
   logout as logoutRequest,
+  refresh as refreshRequest,
   register as registerRequest,
 } from "../services/auth.ts";
 
@@ -38,7 +39,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (active) setUser(u);
       })
       .catch(() => {
-        if (active) setUser(null);
+        if (active) return refreshRequest();
+      })
+      .then((u) => {
+        if (active && u) setUser(u);
       })
       .finally(() => {
         if (active) setLoading(false);
