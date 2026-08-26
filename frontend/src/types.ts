@@ -16,26 +16,12 @@ export interface Article {
   createdAt: number;
 }
 
-export interface UserModel {
-  _id?: string;
-  id?: string;
-  name: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface User {
   id: string;
   name: string;
   email: string;
   createdAt: string;
   updatedAt: string;
-}
-
-export interface AuthResponse {
-  user: UserModel;
-  token?: string;
 }
 
 export const NEWS_EVENT_TYPE = {
@@ -53,7 +39,4 @@ export interface NewsEvent {
 }
 
 export type SocketStatus =
-  | "connecting"
-  | "connected"
-  | "disconnected"
-  | "error";
+  "connecting" | "connected" | "disconnected" | "error";
