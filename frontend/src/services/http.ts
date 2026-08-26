@@ -1,18 +1,16 @@
-import { API_URL } from "../config.ts";
+import { API_PREFIX, API_URL } from "../config.ts";
 
 export async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_URL}${path}`, {
+  const res = await fetch(`${API_URL}${API_PREFIX}${path}`, {
     ...init,
     credentials: "include",
     headers: { "Content-Type": "application/json" },
   });
 
-  const data = (await res.json().catch(() => null)) as unknown;
+  const data = await res.json().catch(() => null);
 
   if (!res.ok) {
-    const message =
-      (data as { error?: string } | null)?.error ?? "Request failed";
-    throw new Error(message);
+    throw new Error("Request failed", data);
   }
 
   return data as T;

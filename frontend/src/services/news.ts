@@ -32,12 +32,12 @@ function toArticle(news: NewsItem): Article {
 }
 
 export async function listArticles(): Promise<Article[]> {
-  const data = await request<{ items: NewsItem[] }>("/api/news");
+  const data = await request<{ items: NewsItem[] }>("/news");
   return data.items.map(toArticle);
 }
 
 export async function createArticle(input: ArticleInput): Promise<Article> {
-  const data = await request<{ news: NewsItem }>("/api/news", {
+  const data = await request<{ news: NewsItem }>("/news", {
     method: "POST",
     body: JSON.stringify({
       title: input.title,
@@ -55,7 +55,7 @@ export async function updateArticle(
   id: string,
   input: ArticleInput,
 ): Promise<Article> {
-  const data = await request<{ news: NewsItem }>(`/api/news/${id}`, {
+  const data = await request<{ news: NewsItem }>(`/news/${id}`, {
     method: "PATCH",
     body: JSON.stringify({
       title: input.title,
@@ -69,5 +69,5 @@ export async function updateArticle(
 }
 
 export async function deleteArticle(id: string): Promise<void> {
-  await request<unknown>(`/api/news/${id}`, { method: "DELETE" });
+  await request<unknown>(`/news/${id}`, { method: "DELETE" });
 }

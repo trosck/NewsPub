@@ -12,13 +12,13 @@ function normalizeUser(raw: AuthResponse["user"]): User {
 }
 
 export async function fetchMe(): Promise<User> {
-  const data = await request<{ user: AuthResponse["user"] }>("/api/me");
+  const data = await request<{ user: AuthResponse["user"] }>("/auth/me");
   return normalizeUser(data.user);
 }
 
 export async function login(email: string, password: string): Promise<User> {
   const data = await request<{ user: AuthResponse["user"] }>(
-    "/api/auth/login",
+    "/auth/login",
     {
       method: "POST",
       body: JSON.stringify({ email, password }),
@@ -33,7 +33,7 @@ export async function register(
   password: string,
 ): Promise<User> {
   const data = await request<{ user: AuthResponse["user"] }>(
-    "/api/auth/register",
+    "/auth/register",
     {
       method: "POST",
       body: JSON.stringify({ name, email, password }),
@@ -43,7 +43,7 @@ export async function register(
 }
 
 export async function logout(): Promise<void> {
-  await request<{ success?: boolean }>("/api/auth/logout", {
+  await request<{ success?: boolean }>("/auth/logout", {
     method: "POST",
   });
 }

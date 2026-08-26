@@ -1,4 +1,4 @@
-import { API_URL } from "../config.ts";
+import { API_PREFIX, API_URL } from "../config.ts";
 
 export interface UploadedFile {
   url: string;
@@ -11,7 +11,7 @@ export async function postUpload(file: File): Promise<UploadedFile> {
   const form = new FormData();
   form.append("file", file);
 
-  const res = await fetch(`${API_URL}/api/upload`, {
+  const res = await fetch(`${API_URL}${API_PREFIX}/upload`, {
     method: "POST",
     body: form,
     credentials: "include",
