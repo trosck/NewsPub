@@ -57,6 +57,8 @@ UserSchema.set("toJSON", {
     const obj = ret as unknown as Record<string, unknown>;
     delete obj.password;
     delete obj.__v;
+    obj.id = obj._id
+    delete obj._id
     return ret;
   },
 });
