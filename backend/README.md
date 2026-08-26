@@ -57,7 +57,6 @@ src/
   auth/               # AuthController/Service, global JwtModule, DTOs
   news/               # NewsController/Service, NewsPublisherService, DTOs, schema
   upload/             # UploadController, TigrisService (S3)
-  realtime/           # NewsGateway (Socket.IO), RealtimeService (event emitter)
   test/               # Jest e2e specs (supertest + mongodb-memory-server)
 ```
 
@@ -84,18 +83,18 @@ src/
 
    Required variables:
 
-   | Variable                  | Description                                    |
-   | ------------------------- | ---------------------------------------------- |
-   | `MONGODB_URI`             | MongoDB connection string                      |
-   | `JWT_SECRET`              | Long random secret for signing JWTs            |
-   | `JWT_EXPIRES_IN`          | Token lifetime, e.g. `7d` (parsed via `ms`)    |
-   | `BCRYPT_SALT_ROUNDS`      | bcrypt cost factor, default `10`               |
-   | `NEWS_PUBLISH_INTERVAL_MS`| Scheduler interval, default `60000`            |
-   | `CLIENT_URL`              | Frontend origin, used for CORS and Socket.IO   |
-   | `S3_ACCESS_KEY_ID`        | S3 access key                                  |
-   | `S3_SECRET_ACCESS_KEY`    | S3 secret key                                  |
-   | `S3_ENDPOINT`             | S3 endpoint URL                                |
-   | `S3_BUCKET`               | Target bucket name                             |
+   | Variable                   | Description                                  |
+   | -------------------------- | -------------------------------------------- |
+   | `MONGODB_URI`              | MongoDB connection string                    |
+   | `JWT_SECRET`               | Long random secret for signing JWTs          |
+   | `JWT_EXPIRES_IN`           | Token lifetime, e.g. `7d` (parsed via `ms`)  |
+   | `BCRYPT_SALT_ROUNDS`       | bcrypt cost factor, default `10`             |
+   | `NEWS_PUBLISH_INTERVAL_MS` | Scheduler interval, default `60000`          |
+   | `CLIENT_URL`               | Frontend origin, used for CORS and Socket.IO |
+   | `S3_ACCESS_KEY_ID`         | S3 access key                                |
+   | `S3_SECRET_ACCESS_KEY`     | S3 secret key                                |
+   | `S3_ENDPOINT`              | S3 endpoint URL                              |
+   | `S3_BUCKET`                | Target bucket name                           |
 
 3. Run in development:
 
@@ -105,15 +104,15 @@ src/
 
 ## Scripts
 
-| Script              | Description                                   |
-| ------------------- | --------------------------------------------- |
-| `pnpm start:dev`    | Start the API with live reload (nest watch)   |
-| `pnpm build`        | Compile to `dist/` via the Nest CLI           |
-| `pnpm start`        | Run the compiled server (`dist/main.js`)      |
-| `pnpm test`         | Run e2e tests (Jest + in-memory MongoDB)      |
-| `pnpm typecheck`    | Type-check without emitting                   |
-| `pnpm format`       | Format `src/**` with Prettier                 |
-| `pnpm format:check` | Check formatting without writing              |
+| Script              | Description                                 |
+| ------------------- | ------------------------------------------- |
+| `pnpm start:dev`    | Start the API with live reload (nest watch) |
+| `pnpm build`        | Compile to `dist/` via the Nest CLI         |
+| `pnpm start`        | Run the compiled server (`dist/main.js`)    |
+| `pnpm test`         | Run e2e tests (Jest + in-memory MongoDB)    |
+| `pnpm typecheck`    | Type-check without emitting                 |
+| `pnpm format`       | Format `src/**` with Prettier               |
+| `pnpm format:check` | Check formatting without writing            |
 
 ## API overview
 

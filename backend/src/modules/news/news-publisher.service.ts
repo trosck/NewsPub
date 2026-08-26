@@ -9,8 +9,6 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 
 import { News, NewsDocument } from "./schemas/news.schema";
-import { RealtimeService } from "../../realtime/realtime.service";
-import { NewsEventType } from "../../realtime/realtime.types";
 
 @Injectable()
 export class NewsPublisherService
@@ -22,7 +20,6 @@ export class NewsPublisherService
 
   constructor(
     @InjectModel(News.name) private readonly newsModel: Model<NewsDocument>,
-    private readonly realtime: RealtimeService,
     configService: ConfigService,
   ) {
     this.intervalMs = configService.get<number>("newsPublishIntervalMs", 60000);
@@ -61,11 +58,9 @@ export class NewsPublisherService
       );
 
       if (result.modifiedCount > 0) {
-        this.logger.log(`News published by scheduler count=${result.modifiedCount}`);
-
-        for (const id of ids) {
-          this.realtime.emitNewsEvent(NewsEventType.Updated, { id });
-        }
+        this.logger.log(
+          `News published by scheduler count=${result.modifiedCount}`,
+        );
       }
     } catch (err) {
       this.logger.error("News publisher tick failed", err as Error);

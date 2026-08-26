@@ -10,8 +10,6 @@ import mongoose, { Model, Types } from "mongoose";
 
 import { News, NewsDocument } from "./schemas/news.schema";
 import { CreateNewsDto } from "./dto/create-news.dto";
-import { RealtimeService } from "../../realtime/realtime.service";
-import { NewsEventType } from "../../realtime/realtime.types";
 import type { UserDocument } from "../users/schemas/user.schema";
 
 export interface ListResult {
@@ -42,7 +40,6 @@ function parsePublishAt(value: unknown): Date | null | undefined {
 export class NewsService {
   constructor(
     @InjectModel(News.name) private readonly newsModel: Model<NewsDocument>,
-    private readonly realtime: RealtimeService,
   ) {}
 
   async list(query: {
@@ -112,10 +109,6 @@ export class NewsService {
       throw err;
     }
 
-    this.realtime.emitNewsEvent(NewsEventType.Created, {
-      id: String(news._id),
-    });
-
     return { news: news.toJSON() };
   }
 
@@ -151,10 +144,6 @@ export class NewsService {
       throw err;
     }
 
-    this.realtime.emitNewsEvent(NewsEventType.Updated, {
-      id: String(news._id),
-    });
-
     return { news: news.toJSON() };
   }
 
@@ -167,9 +156,5 @@ export class NewsService {
     }
 
     await news.deleteOne();
-
-    this.realtime.emitNewsEvent(NewsEventType.Deleted, {
-      id: String(news._id),
-    });
   }
 }
