@@ -23,20 +23,3 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
-
-export const NEWS_EVENT_TYPE = {
-  Created: "news:created",
-  Updated: "news:updated",
-  Deleted: "news:deleted",
-} as const;
-
-export type NewsEventType =
-  (typeof NEWS_EVENT_TYPE)[keyof typeof NEWS_EVENT_TYPE];
-
-export interface NewsEvent {
-  type: NewsEventType;
-  data: { id: string };
-}
-
-export type SocketStatus =
-  "connecting" | "connected" | "disconnected" | "error";

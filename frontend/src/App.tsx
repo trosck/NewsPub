@@ -21,7 +21,7 @@ import {
   listArticles,
   updateArticle,
 } from "./services/news.ts";
-import { NEWS_EVENT_TYPE, type Article, type NewsEvent } from "./types.ts";
+import { type Article } from "./types.ts";
 
 type RouteName = "articles" | "editor";
 type RouteParams = { article?: Article };
@@ -127,14 +127,7 @@ function Root() {
     ),
   };
 
-  const statusColor =
-    status === "connected"
-      ? "green"
-      : status === "connecting"
-        ? "yellow"
-        : status === "error"
-          ? "red"
-          : "gray";
+  const statusColor = "gray";
 
   return (
     <Container size="md" p="md">
@@ -152,7 +145,7 @@ function Root() {
           </Group>
           <Group gap="sm">
             <Badge color={statusColor} variant="light">
-              {status}
+              Idle
             </Badge>
             <Button variant="default" onClick={() => void logout()}>
               Sign out
