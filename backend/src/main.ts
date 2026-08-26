@@ -17,7 +17,7 @@ async function bootstrap(): Promise<void> {
     bodyParser: false,
   });
 
-  const logger = app.get(ConsoleLogger);
+  const logger = new ConsoleLogger();
   app.useLogger(logger);
 
   app.use(helmet());
@@ -34,7 +34,7 @@ async function bootstrap(): Promise<void> {
   );
 
   app.useGlobalFilters(new AllExceptionsFilter(logger));
-
+  app.setGlobalPrefix("/api");
   app.enableShutdownHooks();
 
   const port = Number(process.env.PORT ?? "5000");
