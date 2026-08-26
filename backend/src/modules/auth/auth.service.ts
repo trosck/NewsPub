@@ -11,6 +11,9 @@ import type { Response } from "express";
 import type { User, UserDocument } from "../users/schemas/user.schema";
 import { UsersService } from "../users/users.service";
 
+const MINUTE_15 = 15 * 60 * 1000;
+const DAY_7 = 7 * 24 * 60 * 60 * 1000;
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -56,14 +59,14 @@ export class AuthService {
       httpOnly: true,
       secure: isProd,
       sameSite: "lax",
-      maxAge: 15 * 60 * 1000,
+      maxAge: MINUTE_15,
     });
 
     res.cookie("refresh_token", newRefreshToken, {
       httpOnly: true,
       secure: isProd,
       sameSite: "lax",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge: DAY_7,
     });
 
     return;
@@ -83,7 +86,7 @@ export class AuthService {
       httpOnly: true,
       secure: isProd,
       sameSite: "lax",
-      maxAge: 15 * 60 * 1000, // 15 minutes
+      maxAge: MINUTE_15,
       path: "/",
     });
 
@@ -91,8 +94,7 @@ export class AuthService {
       httpOnly: true,
       secure: isProd,
       sameSite: "lax",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      path: "/auth/refresh",
+      maxAge: DAY_7,
     });
 
     return;
