@@ -35,15 +35,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let active = true;
 
     fetchMe()
-      .then((u) => {
-        if (active) setUser(u);
-      })
       .catch(() => {
         if (active) return refreshRequest();
       })
       .then((u) => {
-        if (active && u) setUser(u);
-        else setUser(null);
+        if (active) {
+          if (u) setUser(u);
+          else setUser(null);
+        }
       })
       .finally(() => {
         if (active) setLoading(false);
