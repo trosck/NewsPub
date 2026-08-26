@@ -12,7 +12,6 @@ import {
 import { notifications } from "@mantine/notifications";
 
 import { AuthProvider, useAuth } from "./context/AuthContext.tsx";
-import { SocketProvider, useSocket } from "./context/SocketContext.tsx";
 import ArticleEditor from "./pages/ArticleEditor.tsx";
 import ArticleList from "./pages/ArticleList.tsx";
 import Login from "./pages/Login.tsx";
@@ -22,7 +21,6 @@ import {
   listArticles,
   updateArticle,
 } from "./services/news.ts";
-import { NOTIFICATION_EVENT } from "./services/socket.ts";
 import { NEWS_EVENT_TYPE, type Article, type NewsEvent } from "./types.ts";
 
 type RouteName = "articles" | "editor";
@@ -36,7 +34,6 @@ const navItems: { label: string; route: RouteName }[] = [
 
 function Root() {
   const { user, loading, logout } = useAuth();
-  const { socket, status } = useSocket();
   const [articles, setArticles] = useState<Article[]>([]);
   const [route, setRoute] = useState<Route>({ name: "articles" });
 
@@ -94,30 +91,6 @@ function Root() {
       setArticles(items);
     } catch {}
   }, []);
-
-  useEffect(() => {
-    if (!socket) return;
-
-    const handler = (event: NewsEvent) => {
-      const map: Record<string, { title: string; color: string }> = {
-        [NEWS_EVENT_TYPE.Created]: { title: "News created", color: "green" },
-        [NEWS_EVENT_TYPE.Updated]: { title: "News updated", color: "blue" },
-        [NEWS_EVENT_TYPE.Deleted]: { title: "News deleted", color: "red" },
-      };
-      const meta = map[event.type] ?? { title: "Notification", color: "gray" };
-
-      notifications.show({
-        title: meta.title,
-        message: `ID: ${event.data.id}`,
-        color: meta.color,
-      });
-    };
-
-    socket.on(NOTIFICATION_EVENT, handler);
-    return () => {
-      socket.off(NOTIFICATION_EVENT, handler);
-    };
-  }, [socket]);
 
   useEffect(() => {
     if (!user) return;
@@ -196,9 +169,7 @@ function Root() {
 function App() {
   return (
     <AuthProvider>
-      <SocketProvider>
-        <Root />
-      </SocketProvider>
+      <Root />
     </AuthProvider>
   );
 }

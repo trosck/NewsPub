@@ -28,7 +28,6 @@ application. Consumes the backend REST API and Socket.IO realtime feed.
 - **Editor** — TipTap (`starter-kit`, `react`, `pm`, `extension-image`,
   `extension-placeholder`, `extension-code-block-lowlight`), lowlight +
   highlight.js, `tiptap-markdown`
-- **Realtime** — socket.io-client
 - **Tooling** — oxlint, Prettier, Sass, PostCSS
 
 ## Project structure
