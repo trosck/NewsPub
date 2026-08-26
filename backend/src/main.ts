@@ -20,12 +20,13 @@ async function bootstrap(): Promise<void> {
   const logger = new ConsoleLogger();
   app.useLogger(logger);
 
+  app.use(cookieParser());
+
   app.use(helmet());
   const clientUrl = process.env.CLIENT_URL ?? "";
   app.use(cors({ origin: clientUrl, credentials: true }));
   app.use(express.json({ limit: "1mb" }));
   app.use(express.urlencoded({ extended: true }));
-  app.use(cookieParser());
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -40,7 +41,7 @@ async function bootstrap(): Promise<void> {
   const port = Number(process.env.PORT ?? "5000");
   await app.listen(port);
 
-  new Logger("Bootstrap").log(`Server running on port ${port}`);
+  logger.log(`Server running on port ${port}`);
 }
 
 void bootstrap();
