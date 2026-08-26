@@ -7,7 +7,6 @@ import { AppController } from "./app.controller";
 import { UsersModule } from "./modules/users/users.module";
 import { AuthModule } from "./modules/auth/auth.module";
 import { NewsModule } from "./modules/news/news.module";
-import { RealtimeModule } from "./realtime/realtime.module";
 import { APP_GUARD } from "@nestjs/core";
 import { JwtAuthGuard } from "./common/guards/jwt-auth.guard";
 import { UploadModule } from "./modules/upload/upload.module";
@@ -25,7 +24,6 @@ import { UploadModule } from "./modules/upload/upload.module";
     AuthModule,
     NewsModule,
     UploadModule,
-    RealtimeModule,
   ],
   controllers: [AppController],
   providers: [
