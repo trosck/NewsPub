@@ -17,6 +17,7 @@ import { RegisterDto } from "./dto/register.dto";
 import { LoginDto } from "./dto/login.dto";
 
 import { Public } from "../../common/decorators/public.decorator";
+import { User, UserDocument } from "../users/schemas/user.schema";
 
 @Controller("auth")
 export class AuthController {
@@ -28,8 +29,9 @@ export class AuthController {
   async register(
     @Body() dto: RegisterDto,
     @Res({ passthrough: true }) res: Response,
-  ): Promise<{ user: unknown }> {
-    return this.authService.register(dto, res);
+  ): Promise<User> {
+    const user = await this.authService.register(dto, res);
+    return user.toJSON();
   }
 
   @Public()
@@ -39,13 +41,15 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ) {
     const user = await this.authService.validateUser(dto.email, dto.password);
-    const result = await this.authService.login(user, res);
-    return res.json(result);
+
+    await this.authService.login(user, res);
+
+    return user.toJSON();
   }
 
   @Post("logout")
-  logout(@Res({ passthrough: true }) res: Response) {
-    return this.authService.logout(res);
+  async logout(@Res({ passthrough: true }) res: Response) {
+    await this.authService.logout(res);
   }
 
   @Public()
@@ -58,10 +62,15 @@ export class AuthController {
     }
 
     await this.authService.refresh(refreshToken, res);
+
+    const user = req.user as UserDocument;
+
+    return user.toJSON();
   }
 
   @Get("me")
-  me() {
-    return;
+  me(@Req() req: Request) {
+    const user = req.user as UserDocument;
+    return user.toJSON();
   }
 }

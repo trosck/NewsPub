@@ -19,7 +19,7 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {}
 
-  async register(data: User, res: Response): Promise<{ user: UserDocument }> {
+  async register(data: User, res: Response): Promise<UserDocument> {
     const exists = await this.usersService.findByEmail(data.email);
     if (exists) throw new ConflictException("Email already in use");
 
@@ -27,7 +27,7 @@ export class AuthService {
 
     await this.login(user, res);
 
-    return { user: user.toJSON() };
+    return user;
   }
 
   async refresh(token: string, res: Response) {
